@@ -35,3 +35,6 @@ for url in urls:
     else:
         failToCheckCount += 1
 
+print("Loaded " + str(len(urls)) + " urls from list.txt")
+print(str(supportedCount) + " out of " + str(len(urls)) + " are supported")
+
