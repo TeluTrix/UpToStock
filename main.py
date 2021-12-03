@@ -2,13 +2,16 @@ import sys
 import os
 import re
 import requests
+import time
+from modules.digitec import checkDigitec
 
 listPath="list.txt"
 supportedPath="supported.txt"
 
+supportedOpen = open(supportedPath, 'r+')
+supportedSites = supportedOpen.readlines()
+
 def checkSupport(link):
-    supportedOpen = open(supportedPath, 'r+')
-    supportedSites = supportedOpen.readlines()
 
     for supportedSite in supportedSites:
         if supportedSite in link:
@@ -17,6 +20,17 @@ def checkSupport(link):
             return False
         else:
             return None
+
+def sortUrl(link):
+    for company in supportedSites:
+        if(company == "digitec"):
+            return checkDigitec(link)
+        else:
+            return time.strftime("[%H:%M:%S] ") + "Couldn't figure out the company"
+
+
+
+
 
 
 listOpen = open(listPath, 'r+')
@@ -35,6 +49,9 @@ for url in urls:
     else:
         failToCheckCount += 1
 
-print("Loaded " + str(len(urls)) + " urls from list.txt")
-print(str(supportedCount) + " out of " + str(len(urls)) + " are supported")
+print(time.strftime("[%H:%M:%S] ") + "Loaded " + str(len(urls)) + " urls from list.txt")
+print(time.strftime("[%H:%M:%S] ") + str(supportedCount) + " out of " + str(len(urls)) + " are supported")
+
+for url in urls:
+    print(sortUrl(url))
 
