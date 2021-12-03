@@ -4,6 +4,7 @@ import re
 import requests
 import time
 from modules.digitec import checkDigitec
+from modules.mediamarkt import checkMediaMarkt
 
 listPath="list.txt"
 supportedPath="supported.txt"
@@ -25,6 +26,8 @@ def sortUrl(link):
     for company in supportedSites:
         if(company == "digitec"):
             return checkDigitec(link)
+        elif (company == "mediamarkt"):
+            return checkMediaMarkt(link)
         else:
             return time.strftime("[%H:%M:%S] ") + "Couldn't figure out the company"
 
